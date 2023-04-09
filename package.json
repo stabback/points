@@ -2,12 +2,14 @@
   "name": "material-cra-ts",
   "version": "5.0.0",
   "private": true,
+  "homepage": "https://stabback.github.io/points",
   "dependencies": {
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
     "@mui/material": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "gh-pages": "^5.0.0",
     "react": "latest",
     "react-dom": "latest",
     "react-scripts": "latest",
@@ -17,7 +19,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "build",
+    "deploy": "gh-pages -d build"
   },
   "browserslist": {
     "production": [
