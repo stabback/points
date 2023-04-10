@@ -6,6 +6,7 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
+  Stack,
 } from "@mui/material";
 import { TrackedTemplate } from "../types";
 
@@ -22,6 +23,10 @@ export const CreateTemplateForm = ({ onSubmit }: CreateTemplateFormProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (label === "" || points === 0) {
+      alert("Please provide a label and points must not be 0.");
+      return;
+    }
     if (templateType === "discrete") {
       createDiscreteTemplate(label, points);
     } else {
@@ -32,44 +37,48 @@ export const CreateTemplateForm = ({ onSubmit }: CreateTemplateFormProps) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <TextField
-        label="Template Label"
-        value={label}
-        onChange={(e) => setLabel(e.target.value)}
-      />
-      <RadioGroup
-        value={templateType}
-        onChange={(e) =>
-          setTemplateType(e.target.value as "discrete" | "runnable")
-        }
-      >
-        <FormControlLabel
-          value="discrete"
-          control={<Radio />}
-          label="Discrete"
-        />
-        <FormControlLabel
-          value="runnable"
-          control={<Radio />}
-          label="Runnable"
-        />
-      </RadioGroup>
-      {templateType === "discrete" ? (
+      <Stack direction="column">
+        <h1>Create new template</h1>
         <TextField
-          label="Points"
-          type="number"
-          value={points}
-          onChange={(e) => setPoints(Number(e.target.value))}
+          label="Template Label"
+          value={label}
+          onChange={(e) => setLabel(e.target.value)}
         />
-      ) : (
-        <TextField
-          label="Points per minute"
-          type="number"
-          value={rate}
-          onChange={(e) => setRate(Number(e.target.value))}
-        />
-      )}
-      <Button type="submit">Create Template</Button>
+        <RadioGroup
+          value={templateType}
+          onChange={(e) =>
+            setTemplateType(e.target.value as "discrete" | "runnable")
+          }
+          style={{ display: "flex", flexDirection: "row" }}
+        >
+          <FormControlLabel
+            value="discrete"
+            control={<Radio />}
+            label="Discrete"
+          />
+          <FormControlLabel
+            value="runnable"
+            control={<Radio />}
+            label="Runnable"
+          />
+        </RadioGroup>
+        {templateType === "discrete" ? (
+          <TextField
+            label="Points"
+            type="number"
+            value={points}
+            onChange={(e) => setPoints(Number(e.target.value))}
+          />
+        ) : (
+          <TextField
+            label="Points per minute"
+            type="number"
+            value={rate}
+            onChange={(e) => setRate(Number(e.target.value))}
+          />
+        )}
+        <Button type="submit">Create Template</Button>
+      </Stack>
     </form>
   );
 };
