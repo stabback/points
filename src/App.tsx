@@ -6,6 +6,7 @@ import { getScoreForDay } from "./get-score-for-day";
 import { CreateTemplateForm } from "./components/CreateTemplateForm";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
+import { Box } from "@mui/material";
 
 export default function App() {
   const store = useStore();
@@ -18,7 +19,9 @@ export default function App() {
       <Points points={pointsForToday} />
       <Button onClick={() => setOpen(true)}>New Template</Button>
       <Drawer anchor="bottom" open={open} onClose={() => setOpen(false)}>
-        <CreateTemplateForm onSubmit={() => setOpen(false)} />
+        <Box p={1}>
+          <CreateTemplateForm onSubmit={() => setOpen(false)} />
+        </Box>
       </Drawer>
     </Container>
   );

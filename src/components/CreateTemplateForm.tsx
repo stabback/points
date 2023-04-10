@@ -7,6 +7,7 @@ import {
   Radio,
   RadioGroup,
   Stack,
+  Typography,
 } from "@mui/material";
 import { TrackedTemplate } from "../types";
 
@@ -16,17 +17,13 @@ export interface CreateTemplateFormProps {
 
 export const CreateTemplateForm = ({ onSubmit }: CreateTemplateFormProps) => {
   const [label, setLabel] = useState("");
-  const [points, setPoints] = useState(0);
-  const [rate, setRate] = useState(0);
+  const [points, setPoints] = useState(1);
+  const [rate, setRate] = useState(1);
   const [templateType, setTemplateType] =
     useState<TrackedTemplate["type"]>("discrete");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (label === "" || points === 0) {
-      alert("Please provide a label and points must not be 0.");
-      return;
-    }
     if (templateType === "discrete") {
       createDiscreteTemplate(label, points);
     } else {
@@ -37,12 +34,13 @@ export const CreateTemplateForm = ({ onSubmit }: CreateTemplateFormProps) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Stack direction="column">
-        <h1>Create new template</h1>
+      <Stack direction="column" spacing={1}>
+        <Typography variant="h4">Create new template</Typography>
         <TextField
           label="Template Label"
           value={label}
           onChange={(e) => setLabel(e.target.value)}
+          required
         />
         <RadioGroup
           value={templateType}
@@ -68,6 +66,7 @@ export const CreateTemplateForm = ({ onSubmit }: CreateTemplateFormProps) => {
             type="number"
             value={points}
             onChange={(e) => setPoints(Number(e.target.value))}
+            required
           />
         ) : (
           <TextField
@@ -75,9 +74,12 @@ export const CreateTemplateForm = ({ onSubmit }: CreateTemplateFormProps) => {
             type="number"
             value={rate}
             onChange={(e) => setRate(Number(e.target.value))}
+            required
           />
         )}
-        <Button type="submit">Create Template</Button>
+        <Button type="submit" variant="contained">
+          Create Template
+        </Button>
       </Stack>
     </form>
   );
